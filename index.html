@@ -1,7 +1,7 @@
 <!-- Latest bootstrap web page, split in half, with a form input on the left and auto-updating output div on the right -->
 <html>
 <head>
-<title>Form Input</title>
+<title>Space Engineer's Your Guess Is As Good As Mine</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- bootstrap -->
@@ -15,10 +15,11 @@
 <!-- <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'> -->
 <style>
   html {
-    height: 100%;
-    /* background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%); */
-    background-color: #000;
-    overflow: hidden;
+    /* height: 100%; */
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    /* background-color: #000; */
+    /* margin-left: -175px; */
+    overflow: hidden;    
   }
   
   #stars {
@@ -71,27 +72,7 @@
     background: transparent;
     box-shadow: 381px 1515px #FFF , 1827px 1460px #FFF , 1851px 1682px #FFF , 643px 1374px #FFF , 1399px 529px #FFF , 342px 999px #FFF , 1350px 1127px #FFF , 1155px 915px #FFF , 1779px 1957px #FFF , 1057px 1752px #FFF , 1240px 80px #FFF , 857px 922px #FFF , 1910px 1387px #FFF , 519px 172px #FFF , 1840px 576px #FFF , 1432px 1622px #FFF , 296px 1422px #FFF , 36px 1062px #FFF , 247px 785px #FFF , 1992px 973px #FFF , 719px 600px #FFF , 516px 969px #FFF , 1003px 1980px #FFF , 925px 1699px #FFF , 448px 36px #FFF , 1176px 1742px #FFF , 1495px 1005px #FFF , 1476px 1383px #FFF , 1663px 1554px #FFF , 352px 1375px #FFF , 490px 831px #FFF , 517px 1722px #FFF , 489px 1518px #FFF , 500px 1714px #FFF , 984px 917px #FFF , 861px 1705px #FFF , 311px 705px #FFF , 38px 195px #FFF , 1936px 44px #FFF , 1928px 1722px #FFF , 142px 1242px #FFF , 767px 1633px #FFF , 1343px 1340px #FFF , 574px 462px #FFF , 978px 1330px #FFF , 486px 1995px #FFF , 1220px 1515px #FFF , 1556px 687px #FFF , 151px 588px #FFF , 52px 749px #FFF , 693px 1965px #FFF , 842px 257px #FFF , 633px 401px #FFF , 1273px 503px #FFF , 532px 72px #FFF , 454px 1808px #FFF , 85px 19px #FFF , 607px 199px #FFF , 154px 1398px #FFF , 19px 111px #FFF , 1212px 1227px #FFF , 210px 674px #FFF , 69px 1195px #FFF , 1641px 175px #FFF , 1036px 596px #FFF , 221px 97px #FFF , 1022px 1410px #FFF , 140px 1126px #FFF , 404px 520px #FFF , 148px 341px #FFF , 901px 338px #FFF , 16px 1758px #FFF , 1416px 1196px #FFF , 665px 1903px #FFF , 434px 1921px #FFF , 1760px 1560px #FFF , 837px 889px #FFF , 300px 919px #FFF , 1449px 70px #FFF , 1498px 940px #FFF , 263px 1633px #FFF , 1772px 761px #FFF , 1398px 745px #FFF , 57px 268px #FFF , 1544px 1680px #FFF , 53px 1117px #FFF , 903px 240px #FFF , 1114px 1697px #FFF , 850px 1929px #FFF , 860px 776px #FFF , 1095px 628px #FFF , 129px 786px #FFF , 866px 808px #FFF , 1962px 1660px #FFF , 1697px 1141px #FFF , 14px 109px #FFF , 707px 1158px #FFF , 939px 350px #FFF , 735px 728px #FFF , 437px 1239px #FFF;
   }
-  
-  #title {
-    position: absolute;
-    /* top: 50%;
-    left: 0;
-    right: 0; */
-    color: #FFF;
-    text-align: center;
-    /* font-family: "lato", sans-serif; */
-    font-weight: 300;
-    font-size: 50px;
-    letter-spacing: 10px;
-    margin-top: -60px;
-    padding-left: 10px;
-  }
-  /* #title span {
-    background: -webkit-linear-gradient(white, #38495a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  } */
-  
+    
   @keyframes animStar {
     from {
       transform: translateY(0px);
@@ -100,50 +81,85 @@
       transform: translateY(-2000px);
     }
   }
+
+  /* have container take up 100% of screen*/
+  #container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* have row take up full screen */
+  #row {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    color: #FFF;
+  }
+
+  /* WhiteText */
+  #whiteText {
+    /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em; */
+    font-weight: bold;
+    text-align: center;
+    color: #FFF;
+    text-shadow: 0 0 10px #FFF, 0 0 20px #FFF, 0 0 30px #FFF, 0 0 40px #FFF, 0 0 50px #FFF, 0 0 60px #FFF, 0 0 70px #FFF, 0 0 80px #FFF, 0 0 90px #FFF;
+  }
+
   </style>
 </head>
 
-<body translate="no">
-  <div id='CalculationForms' class="container">
-    <!-- <span>PURE CSS</span> -->
-    <!-- <br> -->
-    <!-- <span>PARALLAX PIXEL STARS</span> -->
-    <!-- WORDS -->
+<body translate="no"style="background-color: black; color: #FFF;">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-md-6 WhiteText">
+        <h1>Flight Variables</h1>
+        <!-- Form updates via javascript -->
+
+        <script>
+          function updateOutput() {
+            var input = document.getElementById("speedIn").value;
+            document.getElementById("speedOut").innerHTML = input;
+          }
+        </script>
+
+        <form id="form">
+          <div class="form-group">
+            <label for="name">Starting Speed (m/s)</label>
+            <!-- input of speed with default value 0 -->
+            <!-- <input type="text" class="form-control" id="speedIn" onkeyup="updateOutput()" value="0"> -->
+            <input type="text" class="form-control" id="speedIn" onkeyup="updateOutput()" placeholder="0">
+          </div>
+        </form>
+      </div>
+      <div class="col-md-6 WhiteText">
+        <h1>SEYGIAGAM</h1>
+        <div class="form-group">
+          <label for="name">Average Speed (over period)</label>
+          <div id="speedOut"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div id='stars'></div>
   <div id='stars2'></div>
   <div id='stars3'></div>
 
-    <!-- <div class="container">
-      <div class="row">
-            <div class="col-md-6">
-                <h1>Form Input</h1>
-//                Form updates via javascript
-
-                <script>
-                    function updateOutput() {
-                        var input = document.getElementById("input").value;
-                        document.getElementById("output").innerHTML = input;
-                    }
-                </script>
- 
-                <form id="form">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="input" onkeyup="updateOutput()">
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-6">
-                <h1>Output</h1>
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <div id="output"></div>
-                </div>
-            </div>
-        </div>
-    </div> -->
+  <script>
+    // defaults
+    document.getElementById("speedOut").innerHTML = "0";
+  </script>
 
 
 </body>
