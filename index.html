@@ -82,8 +82,16 @@
 
           <form id="form">
             <div class="form-group">
+              <label for="name">Target Distance (Km)</label>
+              <input type="text" class="form-control" id="distanceIn" onkeyup="updateOutput()" placeholder="1">
+              <label for="name">Starting Fuel (H2 or M|KW)</label>
+              <input type="text" class="form-control" id="FuelIn" onkeyup="updateOutput()" placeholder="100">
               <label for="name">Starting Speed (m/s)</label>
               <input type="text" class="form-control" id="speedIn" onkeyup="updateOutput()" placeholder="0">
+              <label for="name">Fuel after timing</label>
+              <input type="text" class="form-control" id="FuelDelta" onkeyup="updateOutput()" placeholder="100">
+              <label for="name">Speed after timing</label>
+              <input type="text" class="form-control" id="speedDelta" onkeyup="updateOutput()" placeholder="0">
             </div>
           </form>
         </div>
