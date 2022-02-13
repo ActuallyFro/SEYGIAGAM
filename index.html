@@ -77,6 +77,8 @@
             function updateOutput() {
               var input = document.getElementById("speedIn").value;
               document.getElementById("speedOut").innerHTML = input;
+
+
             }
           </script>
 
@@ -98,8 +100,16 @@
         <div class="col-md-6">
           <h1>SEYGIAGAM</h1>
           <div class="form-group">
-            <label for="name">Average Speed (over period)</label>
-            <div id="speedOut"></div>
+            <label for="name">Avg Speed (over period): </label>
+            <div id="speedOut" class="form-inline"></div>
+            <label for="name">Est. Time of Arrival: </label>
+            <div id="etaOut" class="form-inline"></div>
+            <label for="name">Fuel Needed: </label>
+            <div id="fuelOut" class="form-inline"></div>
+            <label for="name">Turn Around Distance: </label>
+            <div id="midpointOut" class="form-inline"></div>
+            <label for="name">Variable Displacement Dist: </label> <!-- TEK NOL LI ja CAl -->
+            <div id="engineoffOut" class="form-inline"></div>
           </div>
         </div>
       </div>
@@ -122,6 +132,10 @@
 
 <script>
   document.getElementById("speedOut").innerHTML = "0";
+  document.getElementById("etaOut").innerHTML = "0";
+  document.getElementById("fuelOut").innerHTML = "0";
+  document.getElementById("midpointOut").innerHTML = "0";
+  document.getElementById("engineoffOut").innerHTML = "0";
 
   //Source: http://jsfiddle.net/7EAgz/
   function beep() {
