@@ -75,8 +75,17 @@
 
           <script>
             function updateOutput() {
-              var input = document.getElementById("speedIn").value;
-              document.getElementById("speedOut").innerHTML = input;
+              var totalDist = document.getElementById("distanceIn").value;
+              var fuelStart = document.getElementById("FuelIn").value;
+              var speedStart = document.getElementById("speedIn").value;
+              var fuelEnd = document.getElementById("FuelDelta").value;
+              var speedEnd = document.getElementById("speedDelta").value;
+
+              document.getElementById("speedOut").innerHTML = "0";
+              document.getElementById("etaOut").innerHTML = "0";
+              document.getElementById("fuelOut").innerHTML = "0";
+              document.getElementById("midpointOut").innerHTML = totalDist-totalDist/2;
+              document.getElementById("engineoffOut").innerHTML = totalDist-totalDist/4;
 
 
             }
