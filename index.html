@@ -82,17 +82,22 @@
               var speedEnd = document.getElementById("speedDelta").value;
 
 
-              //Avg Speed (over period): | "speedOut"
-              //Est. Time of Arrival: | "etaOut"
+              //Avg Speed (over period): | "speedOut"  -- total distance / time
+              //Est. Time of Arrival: | "etaOut" -- total distance / avg speed
               //Fuel Needed: | "fuelOut"
-              //Turn Around Distance: | "midpointOut"
-              //Variable Displacement Dist: | "engineoffOut"
+              //Turn Around Distance: | "midpointOut" (i) total distance - VDD,  or (ii) total distance/ 2
+              //Variable Displacement Dist: | "engineoffOut" -- time it takes to hit speed limit
+
               // <!-- a = F / m ==> this COULD show total thrusting force IF user input Mass! -->
+
               // <!-- Acceleration = (velocity final - velocity start)/ accelration time -->
+
               // <!-- Velocity = acceleration * timing period -->
-              // <!-- Distance = velocity end* timing period -->
+              // <!-- Distance = velocity end * timing period -->
               // <!-- Distance = 1/2*acel*timing period^2 + velocity start * timing period -->
 
+              //|---------+----------------------------+-----------|
+              //|   VDD   |  engine off (at max speed) |    VDD    |
 
               document.getElementById("speedOut").innerHTML = "0";
               document.getElementById("etaOut").innerHTML = "0";
