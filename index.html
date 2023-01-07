@@ -76,11 +76,13 @@
 
           <script>
             function updateOutput() {
-              var totalDist = document.getElementById("distanceIn").value;
-              var fuelStart = document.getElementById("FuelIn").value;
-              var speedStart = document.getElementById("speedIn").value;
-              var fuelEnd = document.getElementById("FuelDelta").value;
-              var speedEnd = document.getElementById("speedDelta").value;
+              var totalDist = parseInt(document.getElementById("distanceIn").value);
+
+              var fuelStart = parseInt(document.getElementById("FuelIn").value);
+              var fuelEnd = parseInt(document.getElementById("FuelDelta").value);
+
+              var speedStart = parseInt(document.getElementById("speedIn").value);
+              var speedEnd = parseInt(document.getElementById("speedDelta").value);
 
 
               //Avg Speed (over period): | "speedAvgOut"  -- Distance (Fancy Accel Vers) / timing period ==> 1/2 * (velocity final + velocity initial)
@@ -110,13 +112,16 @@
 
               //|---------+----------------------------+-----------|
               //|   VDD   |  engine off (at max speed) |    VDD    |
+              var timePeriod = 5; //seconds
               var speedAvgOut = (speedEnd + speedStart)/2;
+              var distTravelled = speedAvgOut * timePeriod;
               var etaOut = totalDist/speedAvgOut;
               var fuelOut = (fuelStart - fuelEnd)/etaOut;
               var midpointOut = totalDist-totalDist/2;
               var engineoffOut = totalDist-totalDist/4;
 
-              document.getElementById("speedAvgOut").innerHTML = speedAvgOut;
+              document.getElementById("speedAvgOut").innerHTML = speedAvgOut + " m/s";
+              document.getElementById("estDist").innerHTML = distTravelled + " m";
               document.getElementById("etaOut").innerHTML = etaOut;
               document.getElementById("fuelOut").innerHTML =  fuelOut;
               document.getElementById("midpointOut").innerHTML = midpointOut;
@@ -126,12 +131,13 @@
               console.log("= Calculation Inputs =");
               console.log("totalDist: " + totalDist);
               console.log("fuelStart: " + fuelStart);
-              console.log("speedStart: " + speedStart);
               console.log("fuelEnd: " + fuelEnd);
+              console.log("speedStart: " + speedStart);
               console.log("speedEnd: " + speedEnd);
               console.log("---");
               console.log("= Calculation Results =");
               console.log("speedAvgOut: " + speedAvgOut);
+              console.log("distTravelled: " + distTravelled);
               console.log("etaOut: " + etaOut);
               console.log("fuelOut: " + fuelOut);
               console.log("midpointOut: " + midpointOut);
@@ -162,6 +168,8 @@
           <div class="form-group">
             <label for="name">Avg Speed (over period): </label> <!-- Avg Speed = total distance/timing period -->
             <div id="speedAvgOut" class="form-inline"></div>
+            <label for="name">Est. Traveled Distance: </label> <!-- Est. Dist = avg speed * timing period-->
+            <div id="estDist" class="form-inline"></div>
             <label for="name">Est. Time of Arrival: </label> <!-- Est. Time of Arrival = total distance/avg speed -->
             <div id="etaOut" class="form-inline"></div>
             <label for="name">Fuel Needed: </label>
@@ -196,6 +204,7 @@
 
 <script>
   document.getElementById("speedAvgOut").innerHTML = "0";
+  document.getElementById("estDist").innerHTML = "0";
   document.getElementById("etaOut").innerHTML = "0";
   document.getElementById("fuelOut").innerHTML = "0";
   document.getElementById("midpointOut").innerHTML = "0";
