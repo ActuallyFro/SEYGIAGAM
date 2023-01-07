@@ -82,19 +82,30 @@
               var speedEnd = document.getElementById("speedDelta").value;
 
 
-              //Avg Speed (over period): | "speedOut"  -- total distance / time
-              //Est. Time of Arrival: | "etaOut" -- total distance / avg speed
-              //Fuel Needed: | "fuelOut"
+              //Avg Speed (over period): | "speedOut"  -- Distance (Fancy Accel Vers) / timing period ==> 1/2 * (velocity final + velocity initial)
+
+              //Curent Est. Time of Arrival: | "etaOut" -- total distance / avg speed
+
+              //Best-case Est. Time of Arrival: | "etaOut" -- total distance / best avg speed <== DEPENDS ON VDD/status of turn around point
+
+              //Fuel Needed: | "fuelOut" -- (fuel start - fuel end) / timing period == fuel/ timing period|| 
+              // FOR FULL burn the whole distance: eta (or best eta) * fuel/ timing period
+
               //Turn Around Distance: | "midpointOut" (i) total distance - VDD,  or (ii) total distance/ 2
+
               //Variable Displacement Dist: | "engineoffOut" -- time it takes to hit speed limit
+              //max server speed / acceleration == time until max speed
+              //Case 1: total trip distance > VDD
+              
+              //Case 2: total trip distance < VDD
 
               // <!-- a = F / m ==> this COULD show total thrusting force IF user input Mass! -->
 
-              // <!-- Acceleration = (velocity final - velocity start)/ accelration time -->
+              // <!-- Acceleration = (velocity final - velocity start)/ timing period -->
 
               // <!-- Velocity = acceleration * timing period -->
               // <!-- Distance = velocity end * timing period -->
-              // <!-- Distance = 1/2*acel*timing period^2 + velocity start * timing period -->
+              // <!-- Distance (Fancy Accel Vers) = 1/2*acel*timing period^2 + velocity start * timing period -->
 
               //|---------+----------------------------+-----------|
               //|   VDD   |  engine off (at max speed) |    VDD    |
