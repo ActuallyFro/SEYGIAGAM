@@ -129,7 +129,7 @@
 
               document.getElementById("speedAvgOut").innerHTML = speedAvgOut + " m/s (accel: " + accelAvgOut + " m/s^2)";
               document.getElementById("estDist").innerHTML = distTravelled + " m";
-              document.getElementById("etaOut").innerHTML = etaOut;
+              document.getElementById("etaOut").innerHTML = Math.ceil(etaOut) + " s (" + Math.floor(etaOut/60) + " min, "+ Math.ceil(etaOut%60) +" s)";
               document.getElementById("fuelOut").innerHTML =  fuelOut;
               document.getElementById("midpointOut").innerHTML = midpointOut;
               document.getElementById("engineoffOut").innerHTML = engineoffOut;
@@ -156,7 +156,7 @@
 
           <form id="form">
             <div class="form-group">
-              <label for="name">Target Distance (Km)</label>
+              <label for="name">Target Distance (m)</label>
               <input type="text" class="form-control" id="distanceIn" onkeyup="updateOutput()" placeholder="1">
               <label for="name">Starting Fuel (H2 or M|KW)</label>
               <input type="text" class="form-control" id="FuelIn" onkeyup="updateOutput()" placeholder="100">
