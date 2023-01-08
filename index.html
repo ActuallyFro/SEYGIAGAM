@@ -123,33 +123,33 @@
               var accelAvgOut = (speedEnd - speedStart)/timePeriod;
               var distTravelled = speedAvgOut * timePeriod;
               var etaOut = totalDist/speedAvgOut;
-              var fuelOut = (fuelStart - fuelEnd)/etaOut;
+              var fuelOut = (fuelStart - fuelEnd);
               var midpointOut = totalDist-totalDist/2;
               var engineoffOut = totalDist-totalDist/4;
 
               document.getElementById("speedAvgOut").innerHTML = speedAvgOut + " m/s (accel: " + accelAvgOut + " m/s^2)";
               document.getElementById("estDist").innerHTML = distTravelled + " m";
-              document.getElementById("etaOut").innerHTML = Math.ceil(etaOut) + " s (" + Math.floor(etaOut/60) + " min, "+ Math.ceil(etaOut%60) +" s)";
-              document.getElementById("fuelOut").innerHTML =  fuelOut;
+              document.getElementById("etaOut").innerHTML = Math.ceil(etaOut) + " s (" + Math.floor(etaOut/60) + " min "+ Math.ceil(etaOut%60) +" s)";
+              document.getElementById("fuelOut").innerHTML =  fuelOut + " (per sec: " + fuelOut/timePeriod + ")";
               document.getElementById("midpointOut").innerHTML = midpointOut;
               document.getElementById("engineoffOut").innerHTML = engineoffOut;
 
-              console.log("============================");
-              console.log("= Calculation Inputs =");
-              console.log("totalDist: " + totalDist);
-              console.log("fuelStart: " + fuelStart);
-              console.log("fuelEnd: " + fuelEnd);
-              console.log("speedStart: " + speedStart);
-              console.log("speedEnd: " + speedEnd);
-              console.log("---");
-              console.log("= Calculation Results =");
-              console.log("speedAvgOut: " + speedAvgOut);
-              console.log("distTravelled: " + distTravelled);
-              console.log("etaOut: " + etaOut);
-              console.log("fuelOut: " + fuelOut);
-              console.log("midpointOut: " + midpointOut);
-              console.log("engineoffOut: " + engineoffOut);
-              console.log("============================");
+              // console.log("============================");
+              // console.log("= Calculation Inputs =");
+              // console.log("totalDist: " + totalDist);
+              // console.log("fuelStart: " + fuelStart);
+              // console.log("fuelEnd: " + fuelEnd);
+              // console.log("speedStart: " + speedStart);
+              // console.log("speedEnd: " + speedEnd);
+              // console.log("---");
+              // console.log("= Calculation Results =");
+              // console.log("speedAvgOut: " + speedAvgOut);
+              // console.log("distTravelled: " + distTravelled);
+              // console.log("etaOut: " + etaOut);
+              // console.log("fuelOut: " + fuelOut);
+              // console.log("midpointOut: " + midpointOut);
+              // console.log("engineoffOut: " + engineoffOut);
+              // console.log("============================");
             }
 
           </script>
@@ -178,7 +178,7 @@
             <div id="estDist" class="form-inline"></div>
             <label for="name">Est. Time of Arrival: </label> <!-- Est. Time of Arrival = total distance/avg speed -->
             <div id="etaOut" class="form-inline"></div>
-            <label for="name">Fuel Needed: </label>
+            <label for="name">Fuel Used: </label>
             <div id="fuelOut" class="form-inline"></div>
             <label for="name">Turn Around Distance: </label>
             <div id="midpointOut" class="form-inline"></div>
