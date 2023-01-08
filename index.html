@@ -102,9 +102,11 @@
               // time until max speed = max server speed / acceleration ==>
               //VDD = 1/2 * acceleration * (time until max speed)^2 == 1/2*(time until max speed)^2/acceleration
 
-              //Case 1: total trip distance > VDD
-              
-              //Case 2: total trip distance < VDD
+              //Point of no return cases:
+              //Case -1: determine if MAX speed is hit -- VDD != VDDmax
+              //Case 0: Determine if est. traveled distance exceeds target distance
+              //Case 1: total trip distance > VDD * 2 (?times 2?)              
+              //Case 2: total trip distance < VDD  (?times 2?)
 
               // <!-- a = F / m ==> this COULD show total thrusting force IF user input Mass! -->
 
@@ -118,13 +120,14 @@
               //|   VDD   |  engine off (at max speed) |    VDD    |
               var timePeriod = 5; //seconds
               var speedAvgOut = (speedEnd + speedStart)/2;
+              var accelAvgOut = (speedEnd - speedStart)/timePeriod;
               var distTravelled = speedAvgOut * timePeriod;
               var etaOut = totalDist/speedAvgOut;
               var fuelOut = (fuelStart - fuelEnd)/etaOut;
               var midpointOut = totalDist-totalDist/2;
               var engineoffOut = totalDist-totalDist/4;
 
-              document.getElementById("speedAvgOut").innerHTML = speedAvgOut + " m/s";
+              document.getElementById("speedAvgOut").innerHTML = speedAvgOut + " m/s (accel: " + accelAvgOut + " m/s^2)";
               document.getElementById("estDist").innerHTML = distTravelled + " m";
               document.getElementById("etaOut").innerHTML = etaOut;
               document.getElementById("fuelOut").innerHTML =  fuelOut;
@@ -147,9 +150,8 @@
               console.log("midpointOut: " + midpointOut);
               console.log("engineoffOut: " + engineoffOut);
               console.log("============================");
-
-
             }
+
           </script>
 
           <form id="form">
@@ -208,6 +210,7 @@
 
 <script>
   document.getElementById("speedAvgOut").innerHTML = "0";
+  // document.getElementById("accelAvgOut").innerHTML = "0";
   document.getElementById("estDist").innerHTML = "0";
   document.getElementById("etaOut").innerHTML = "0";
   document.getElementById("fuelOut").innerHTML = "0";
