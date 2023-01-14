@@ -151,7 +151,11 @@
 
               document.getElementById("fuelUsedDelta").innerHTML =  fuelUsedDelta + " (per sec: " + fuelUsedDelta/timePeriod + ")";
               document.getElementById("midpointOut").innerHTML = midpointOut;
-              document.getElementById("brakingDistStart").innerHTML = brakingDistance+" m (after traveling: "+brakingDistStart +" m)";
+
+              var brakingTime = brakingDistance/speedAvgOut;
+              brakingTime = Math.floor(brakingTime * 100) / 100;
+
+              document.getElementById("brakingDistStart").innerHTML = brakingDistance+" m (after traveling: "+brakingDistStart +" m) <br>((Est. Time needed: "+brakingTime+" s))";
 
 
               // console.log("============================");
