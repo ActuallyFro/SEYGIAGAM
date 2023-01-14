@@ -91,7 +91,7 @@
 
               //Best-case Est. Time of Arrival: | "etaToTargetDist" -- total distance / best avg speed <== DEPENDS ON VDD/status of turn around point
 
-              //Fuel Needed: | "fuelUsedDelta" -- (fuel start - fuel end) / timing period == fuel/ timing period|| 
+              //Fuel: | "fuelUsedDelta" -- (fuel start - fuel end) / timing period == fuel/ timing period|| 
               // FOR FULL burn the whole distance: eta (or best eta) * fuel/ timing period
 
               //Turn Around Distance: | "midpointOut" (i) total distance - VDD,  or (ii) total distance/ 2
@@ -153,9 +153,15 @@
               document.getElementById("midpointOut").innerHTML = midpointOut;
 
               var brakingTime = brakingDistance/speedAvgOut;
+              var brakingFuel = brakingTime*fuelUsedPerSec;
               brakingTime = Math.floor(brakingTime * 100) / 100;
+              brakingFuel = Math.floor(brakingFuel * 100) / 100;
 
-              document.getElementById("brakingDistStart").innerHTML = brakingDistance+" m (after traveling: "+brakingDistStart +" m) <br>((Est. Time needed: "+brakingTime+" s))";
+              if (brakingFuel > fuelEnd) {
+                document.getElementById("brakingDistStart").innerHTML = brakingDistance+" m (after traveling: "+brakingDistStart +" m) <br>((Est. Time: "+brakingTime+" s)) <br> ((Est. Fuel: <font color=\"red\">"+brakingFuel+"</font> units))";
+              } else {
+                document.getElementById("brakingDistStart").innerHTML = brakingDistance+" m (after traveling: "+brakingDistStart +" m) <br>((Est. Time: "+brakingTime+" s)) <br> ((Est. Fuel: <font color=\"green\">"+brakingFuel+"</font> units))";
+              }
 
 
               // console.log("============================");
@@ -206,8 +212,10 @@
             <div id="fuelUsedDelta" class="form-inline"></div>
             <label for="name">Flip Around, Midpoint Distance: </label>
             <div id="midpointOut" class="form-inline"></div>
+            <hr>
             <label for="name">Breaking Distance Start: </label>
             <div id="brakingDistStart" class="form-inline"></div>
+            <hr>
             <label for="name">Variable Displacement Dist (stop thrusting to save fuel): </label>
             <div id="engineoffOut" class="form-inline"></div>
           </div>
