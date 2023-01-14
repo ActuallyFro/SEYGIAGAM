@@ -87,16 +87,16 @@
 
               //Avg Speed (over period): | "speedAvgOut"  -- Distance (Fancy Accel Vers) / timing period ==> 1/2 * (velocity final + velocity initial)
 
-              //Curent Est. Time of Arrival: | "etaOut" -- total distance / avg speed
+              //Curent Est. Time of Arrival: | "etaToTargetDist" -- total distance / avg speed
 
-              //Best-case Est. Time of Arrival: | "etaOut" -- total distance / best avg speed <== DEPENDS ON VDD/status of turn around point
+              //Best-case Est. Time of Arrival: | "etaToTargetDist" -- total distance / best avg speed <== DEPENDS ON VDD/status of turn around point
 
-              //Fuel Needed: | "fuelOut" -- (fuel start - fuel end) / timing period == fuel/ timing period|| 
+              //Fuel Needed: | "fuelUsedDelta" -- (fuel start - fuel end) / timing period == fuel/ timing period|| 
               // FOR FULL burn the whole distance: eta (or best eta) * fuel/ timing period
 
               //Turn Around Distance: | "midpointOut" (i) total distance - VDD,  or (ii) total distance/ 2
 
-              //Variable Displacement Dist: | "engineoffOut" -- time it takes to hit speed limit
+              //Variable Displacement Dist: | "brakingDistStart" -- time it takes to hit speed limit
               //max server speed / acceleration == time until max speed
 
               // time until max speed = max server speed / acceleration ==>
@@ -119,20 +119,40 @@
               //|---------+----------------------------+-----------|
               //|   VDD   |  engine off (at max speed) |    VDD    |
               var timePeriod = 5; //seconds
+              var reservedDistance = 0; //assumes fuel rate would burn at the same rate; determine distance/fuel -- then calculate fuel, and multiply by this rate...
               var speedAvgOut = (speedEnd + speedStart)/2;
               var accelAvgOut = (speedEnd - speedStart)/timePeriod;
-              var distTravelled = speedAvgOut * timePeriod;
-              var etaOut = totalDist/speedAvgOut;
-              var fuelOut = (fuelStart - fuelEnd);
-              var midpointOut = totalDist-totalDist/2;
-              var engineoffOut = totalDist-totalDist/4;
+              var estDistTravelled = speedAvgOut * timePeriod;
+              var etaToTargetDist = totalDist/speedAvgOut;
+              var fuelUsedDelta = (fuelStart - fuelEnd);
+              var fuelUsedPerSec = fuelUsedDelta/timePeriod;
+
+              var reservedFuelPercent = 10;
+              var reservedFuelAmount = -1;
+              var estFlightTimeAmount = -1;
 
               document.getElementById("speedAvgOut").innerHTML = speedAvgOut + " m/s (accel: " + accelAvgOut + " m/s^2)";
-              document.getElementById("estDist").innerHTML = distTravelled + " m";
-              document.getElementById("etaOut").innerHTML = Math.ceil(etaOut) + " s (" + Math.floor(etaOut/60) + " min "+ Math.ceil(etaOut%60) +" s)";
-              document.getElementById("fuelOut").innerHTML =  fuelOut + " (per sec: " + fuelOut/timePeriod + ")";
+              document.getElementById("estDist").innerHTML = estDistTravelled + " m";
+              var calcdMins = Math.floor(etaToTargetDist/60);
+              var calcdSecs = Math.ceil(etaToTargetDist%60);
+              if (calcdSecs == 60) {
+                calcdSecs = 0;
+                calcdMins++;
+              }
+              document.getElementById("etaToTargetDist").innerHTML = Math.ceil(etaToTargetDist) + " s (" + calcdMins + " min "+ calcdSecs + " s)";
+
+              //https://www.webpages.uidaho.edu/niatt_labmanual/chapters/geometricdesign/theoryandconcepts/brakingdistance.htm
+              //Vfin^2=Vo^2+2ad --> d = -Vo^2/(2a) 
+              var brakingDistance = Math.ceil(speedEnd*speedEnd/(2*accelAvgOut));
+
+              var midpointOut = totalDist-totalDist/2;
+              // var turnAroundPoint = totalDist-estDistTravelled;
+              var brakingDistStart = totalDist-brakingDistance;
+
+              document.getElementById("fuelUsedDelta").innerHTML =  fuelUsedDelta + " (per sec: " + fuelUsedDelta/timePeriod + ")";
               document.getElementById("midpointOut").innerHTML = midpointOut;
-              document.getElementById("engineoffOut").innerHTML = engineoffOut;
+              document.getElementById("brakingDistStart").innerHTML = brakingDistance+" m (after traveling: "+brakingDistStart +" m)";
+
 
               // console.log("============================");
               // console.log("= Calculation Inputs =");
@@ -144,11 +164,11 @@
               // console.log("---");
               // console.log("= Calculation Results =");
               // console.log("speedAvgOut: " + speedAvgOut);
-              // console.log("distTravelled: " + distTravelled);
-              // console.log("etaOut: " + etaOut);
-              // console.log("fuelOut: " + fuelOut);
+              // console.log("estDistTravelled: " + estDistTravelled);
+              // console.log("etaToTargetDist: " + etaToTargetDist);
+              // console.log("fuelUsedDelta: " + fuelUsedDelta);
               // console.log("midpointOut: " + midpointOut);
-              // console.log("engineoffOut: " + engineoffOut);
+              // console.log("brakingDistStart: " + brakingDistStart);
               // console.log("============================");
             }
 
@@ -177,12 +197,14 @@
             <label for="name">Est. Traveled Distance: </label> <!-- Est. Dist = avg speed * timing period-->
             <div id="estDist" class="form-inline"></div>
             <label for="name">Est. Time of Arrival: </label> <!-- Est. Time of Arrival = total distance/avg speed -->
-            <div id="etaOut" class="form-inline"></div>
+            <div id="etaToTargetDist" class="form-inline"></div>
             <label for="name">Fuel Used: </label>
-            <div id="fuelOut" class="form-inline"></div>
-            <label for="name">Turn Around Distance: </label>
+            <div id="fuelUsedDelta" class="form-inline"></div>
+            <label for="name">Flip Around, Midpoint Distance: </label>
             <div id="midpointOut" class="form-inline"></div>
-            <label for="name">Variable Displacement Dist: </label> <!-- TEK NOL LI ja CAl -->
+            <label for="name">Breaking Distance Start: </label>
+            <div id="brakingDistStart" class="form-inline"></div>
+            <label for="name">Variable Displacement Dist (stop thrusting to save fuel): </label>
             <div id="engineoffOut" class="form-inline"></div>
           </div>
         </div>
@@ -212,11 +234,11 @@
   document.getElementById("speedAvgOut").innerHTML = "0";
   // document.getElementById("accelAvgOut").innerHTML = "0";
   document.getElementById("estDist").innerHTML = "0";
-  document.getElementById("etaOut").innerHTML = "0";
-  document.getElementById("fuelOut").innerHTML = "0";
+  document.getElementById("etaToTargetDist").innerHTML = "0";
+  document.getElementById("fuelUsedDelta").innerHTML = "0";
   document.getElementById("midpointOut").innerHTML = "0";
-  document.getElementById("engineoffOut").innerHTML = "0";
-
+  document.getElementById("brakingDistStart").innerHTML = "0";
+  document.getElementById("engineoffOut").innerHTML = "0"; 
   //Source: http://jsfiddle.net/7EAgz/
   function beep() {
     var snd = new  Audio("data:audio/wav;base64,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qJrx4KOQjahZxWbcZgztj2c49nKmkId44S71j0c8eV9yDK6uPRzx5X18eDvjvQ6yKo9ZSS6l//8elePK/Lf//IInrOF/FvDoADYAGBMGb7FtErm5MXMlmPAJQVgWta7Zx2go+8xJ0UiCb8LHHdftWyLJE0QIAIsI+UbXu67dZMjmgDGCGl1H+vpF4NSDckSIkk7Vd+sxEhBQMRU8j/12UIRhzSaUdQ+rQU5kGeFxm+hb1oh6pWWmv3uvmReDl0UnvtapVaIzo1jZbf/pD6ElLqSX+rUmOQNpJFa/r+sa4e/pBlAABoAAAAA3CUgShLdGIxsY7AUABPRrgCABdDuQ5GC7DqPQCgbbJUAoRSUj+NIEig0YfyWUho1VBBBA//uQZB4ABZx5zfMakeAAAAmwAAAAF5F3P0w9GtAAACfAAAAAwLhMDmAYWMgVEG1U0FIGCBgXBXAtfMH10000EEEEEECUBYln03TTTdNBDZopopYvrTTdNa325mImNg3TTPV9q3pmY0xoO6bv3r00y+IDGid/9aaaZTGMuj9mpu9Mpio1dXrr5HERTZSmqU36A3CumzN/9Robv/Xx4v9ijkSRSNLQhAWumap82WRSBUqXStV/YcS+XVLnSS+WLDroqArFkMEsAS+eWmrUzrO0oEmE40RlMZ5+ODIkAyKAGUwZ3mVKmcamcJnMW26MRPgUw6j+LkhyHGVGYjSUUKNpuJUQoOIAyDvEyG8S5yfK6dhZc0Tx1KI/gviKL6qvvFs1+bWtaz58uUNnryq6kt5RzOCkPWlVqVX2a/EEBUdU1KrXLf40GoiiFXK///qpoiDXrOgqDR38JB0bw7SoL+ZB9o1RCkQjQ2CBYZKd/+VJxZRRZlqSkKiws0WFxUyCwsKiMy7hUVFhIaCrNQsKkTIsLivwKKigsj8XYlwt/WKi2N4d//uQRCSAAjURNIHpMZBGYiaQPSYyAAABLAAAAAAAACWAAAAApUF/Mg+0aohSIRobBAsMlO//Kk4soosy1JSFRYWaLC4qZBYWFRGZdwqKiwkNBVmoWFSJkWFxX4FFRQWR+LsS4W/rFRb/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////VEFHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU291bmRib3kuZGUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjAwNGh0dHA6Ly93d3cuc291bmRib3kuZGUAAAAAAAAAACU=");  
